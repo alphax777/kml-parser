@@ -4,14 +4,17 @@ import { Attributes } from '../types/node-xml-stream';
 import { Tags } from './tags';
 import BaseParser from './BaseParser';
 import FolderParser from './Folderparser';
-import { Design } from '../types/design';
+import { Design, Layer } from '../types/design';
+import hexToLong from '../utils/hexToLong';
 
 export default class KmlParser extends BaseParser<Design> {
     output: Design;
+    activeLayer: Layer;
 
     constructor(stream: stream.Readable) {
         const xml = new XmlParser();
-        const parserStream = stream.pipe(xml);
+        const parserStream: stream.Readable = stream.pipe(xml);
+        parserStream.setMaxListeners(100);
         super(parserStream);
         this.output = {
             tables: {
@@ -25,14 +28,39 @@ export default class KmlParser extends BaseParser<Design> {
         };
     }
 
-    async openTag(name: string, attributes: Attributes) {
+    openTag(name: string, attributes: Attributes) {
         switch (name) {
             case Tags.Folder: {
-                const folderParser = new FolderParser(this.stream);
-                const folder = await folderParser.parse();
-                this.output.tables.layer.layers[folder.name] = folder;
+                this.parseFolder();
+                break;
             }
         }
+    }
+
+    async parseFolder() {
+        const folderParser = new FolderParser(this.stream);
+        const folder = await folderParser.parse();
+        const { name, placemarks } = folder;
+        this.output.tables.layer.layers[folder.name] = { name };
+        placemarks.forEach(placemark => {
+            const { description, lineString, style } = placemark;
+            if (lineString) {
+                this.output.entities.push({
+                    layer: name,
+                    type: 'POLYLINE',
+                    color:
+                        style && style.lineStyle
+                            ? hexToLong(style.lineStyle.color)
+                            : 0xffffff,
+                    vertices: lineString.coordinates || [],
+                    extendedData: description
+                        ? {
+                              customStrings: [description],
+                          }
+                        : undefined,
+                });
+            }
+        });
     }
 
     finish() {

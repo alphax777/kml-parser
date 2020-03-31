@@ -1,13 +1,32 @@
-export type Entity = any;
-
-export type Cartesian3Like = {
+export type Cartesian3 = {
     x: number;
     y: number;
     z: number;
 };
 
+export interface BaseEntity {
+    type: string;
+    extendedData?: {
+        customStrings: Array<string>;
+    };
+    layer: string;
+}
+
+export interface Polyline extends BaseEntity {
+    type: 'POLYLINE';
+    color: number;
+    vertices: Array<Cartesian3>;
+}
+
+export interface Point extends BaseEntity {
+    type: 'POINT';
+    position: Cartesian3;
+}
+
+export type Entity = Polyline | Point;
+
 export type Block = {
-    position: Cartesian3Like;
+    position: Cartesian3;
     entities: Array<Entity>;
 };
 

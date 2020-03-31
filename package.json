@@ -1,7 +1,13 @@
 {
+    "name": "@propelleraero/dxf-parser",
+    "version": "0.0.1",
+    "description": "Parse KML files into Propeller design file spec",
+    "main": "index.js",
     "scripts": {
         "build": "babel src --out-dir dist --extensions '.ts'",
-        "test": "jest"
+        "test": "jest",
+        "codeship:decrypt": "./deployment/crypto.sh decrypt ./deployment/encrypted ./deployment/secrets",
+        "codeship:encrypt": "./deployment/crypto.sh encrypt ./deployment/secrets ./deployment/encrypted"
     },
     "devDependencies": {
         "@babel/cli": "^7.8.4",
@@ -9,14 +15,16 @@
         "@babel/plugin-proposal-class-properties": "^7.8.3",
         "@babel/preset-env": "^7.9.0",
         "@babel/preset-typescript": "^7.9.0",
+        "@types/html-entities": "^1.2.16",
         "@types/jest": "^25.1.4",
         "@types/node": "^13.9.6",
         "husk": "^0.5.3",
+        "jest": "^25.2.4",
         "ts-jest": "^25.3.0",
         "typescript": "^3.8.3"
     },
     "dependencies": {
-        "jest": "^25.2.4",
+        "html-entities": "^1.2.1",
         "node-xml-stream": "^1.0.2"
     },
     "husky": {
