@@ -18,4 +18,4 @@ fi
 yarn build
 npm publish
 
-git tag $PACKAGE_VERSION && git push origin $PACKAGE_VERSION
+# git tag $PACKAGE_VERSION && git push origin $PACKAGE_VERSION
