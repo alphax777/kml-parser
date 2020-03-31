@@ -1,5 +1,5 @@
 {
-    "name": "@propelleraero/dxf-parser",
+    "name": "@propelleraero/kml-parser",
     "version": "0.0.1",
     "description": "Parse KML files into Propeller design file spec",
     "main": "index.js",
