@@ -3,7 +3,7 @@ import XmlParser from 'node-xml-stream';
 import { Attributes } from '../types/node-xml-stream';
 import { Tags } from './tags';
 import BaseParser from './BaseParser';
-import FolderParser from './Folderparser';
+import FolderParser from './FolderParser';
 import { Design, Layer } from '../types/design';
 import hexToLong from '../utils/hexToLong';
 
