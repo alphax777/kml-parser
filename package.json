@@ -1,6 +1,6 @@
 {
     "name": "@propelleraero/kml-parser",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "Parse KML files into Propeller design file spec",
     "main": "src/index.ts",
     "repository": {
