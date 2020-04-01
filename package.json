@@ -1,6 +1,6 @@
 {
     "name": "@propelleraero/kml-parser",
-    "version": "0.0.2",
+    "version": "1.0.0",
     "description": "Parse KML files into Propeller design file spec",
     "main": "src/index.ts",
     "repository": {
@@ -8,7 +8,7 @@
         "url": "https://github.com/PropellerAero/kml-parser.git"
     },
     "scripts": {
-        "build": "babel src --out-dir dist --extensions '.ts'",
+        "build": "babel src --out-dir dist --extensions '.ts' --source-maps",
         "test": "jest",
         "codeship:decrypt": "./deployment/crypto.sh decrypt ./deployment/encrypted ./deployment/secrets",
         "codeship:encrypt": "./deployment/crypto.sh encrypt ./deployment/secrets ./deployment/encrypted"
