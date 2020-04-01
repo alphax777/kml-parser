@@ -1,10 +1,9 @@
-import stream from 'stream';
 import { Attributes } from '../types/node-xml-stream';
 
 type StreamEventHandler = (...args: any[]) => void;
 
 export default class BaseParser<T> {
-    stream: stream.Readable;
+    stream: NodeJS.ReadableStream;
     promise: Promise<T>;
     resolveFn: (data: T) => void;
     rejectFn: (error: Error) => void;
@@ -12,7 +11,7 @@ export default class BaseParser<T> {
         [event: string]: StreamEventHandler;
     } = {};
 
-    constructor(stream: stream.Readable) {
+    constructor(stream: NodeJS.ReadableStream) {
         this.stream = stream;
         this.promise = new Promise<T>((resolve, reject) => {
             this.resolveFn = resolve;

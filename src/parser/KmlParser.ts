@@ -1,4 +1,3 @@
-import stream from 'stream';
 import XmlParser from 'node-xml-stream';
 import { Attributes } from '../types/node-xml-stream';
 import { Tags } from './tags';
@@ -11,9 +10,9 @@ export default class KmlParser extends BaseParser<Design> {
     output: Design;
     activeLayer: Layer;
 
-    constructor(stream: stream.Readable) {
+    constructor(stream: NodeJS.ReadableStream) {
         const xml = new XmlParser();
-        const parserStream: stream.Readable = stream.pipe(xml);
+        const parserStream: NodeJS.ReadableStream = stream.pipe(xml);
         parserStream.setMaxListeners(100);
         super(parserStream);
         this.output = {
