@@ -1,4 +1,3 @@
-import stream from 'stream';
 import BaseParser from './BaseParser';
 import { Tags } from './tags';
 import TextParser from './TextParser';

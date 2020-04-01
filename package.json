@@ -8,7 +8,9 @@
         "url": "https://github.com/PropellerAero/kml-parser.git"
     },
     "scripts": {
-        "build": "babel src --out-dir dist --extensions '.ts' --source-maps",
+        "build": "yarn build:source & yarn build:declarations",
+        "build:source": "babel src --out-dir dist --extensions '.ts' --source-maps",
+        "build:declarations": "tsc src/index.ts --declaration --emitDeclarationOnly --outDir dist",
         "test": "jest",
         "codeship:decrypt": "./deployment/crypto.sh decrypt ./deployment/encrypted ./deployment/secrets",
         "codeship:encrypt": "./deployment/crypto.sh encrypt ./deployment/secrets ./deployment/encrypted"
@@ -25,6 +27,7 @@
         "husky": "^4.2.3",
         "jest": "^25.2.4",
         "ts-jest": "^25.3.0",
+        "tsc": "^1.20150623.0",
         "typescript": "^3.8.3"
     },
     "dependencies": {
