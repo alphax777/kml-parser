@@ -5,6 +5,8 @@ export type Cartesian3 = {
 };
 
 export interface BaseEntity {
+    handle: string;
+    ownerHandle?: string;
     type: string;
     extendedData?: {
         customStrings: Array<string>;
@@ -48,6 +50,8 @@ export type Design = {
     header: Array<any>;
     tables: {
         layer: {
+            handle?: string;
+            ownerHandle?: string;
             layers: LayerTable;
         };
     };

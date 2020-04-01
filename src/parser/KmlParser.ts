@@ -18,6 +18,8 @@ export default class KmlParser extends BaseParser<Design> {
         this.output = {
             tables: {
                 layer: {
+                    handle: '2',
+                    ownerHandle: '0',
                     layers: {},
                 },
             },
@@ -45,6 +47,7 @@ export default class KmlParser extends BaseParser<Design> {
             const { description, lineString, style } = placemark;
             if (lineString) {
                 this.output.entities.push({
+                    handle: this.output.entities.length.toString(),
                     layer: name,
                     type: 'POLYLINE',
                     color:
