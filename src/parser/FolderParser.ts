@@ -15,19 +15,20 @@ export default class FolderParser extends BaseParser<Folder> {
     async openTag(tagName: string) {
         switch (tagName) {
             case Tags.Name: {
-                const textParser = new TextParser(this.stream);
+                const textParser = new TextParser(this.stream, this.options);
                 const name = await textParser.parse();
                 this.folder.name = name;
                 break;
             }
             case Tags.Placemark: {
                 this.parsePlacemark();
+                break;
             }
         }
     }
 
     async parsePlacemark() {
-        const placemarkParser = new PlacemarkParser(this.stream);
+        const placemarkParser = new PlacemarkParser(this.stream, this.options);
         const placemark = await placemarkParser.parse();
         this.folder.placemarks.push(placemark);
     }

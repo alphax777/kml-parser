@@ -4,7 +4,7 @@ import TextParser from './TextParser';
 import StyleParser from './StyleParser';
 import { Placemark } from '../types/kml';
 import { Tags } from './tags';
-import LineStringParser from './LineString';
+import LineStringParser from './LineStringParser';
 
 const htmlEntities = new AllHtmlEntities();
 
@@ -43,7 +43,10 @@ export default class PlacemarkParser extends BaseParser<Placemark> {
     }
 
     async parseLineString() {
-        const lineStringParser = new LineStringParser(this.stream);
+        const lineStringParser = new LineStringParser(
+            this.stream,
+            this.options
+        );
         const lineString = await lineStringParser.parse();
         this.placemark.lineString = lineString;
     }

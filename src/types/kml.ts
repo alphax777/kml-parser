@@ -1,3 +1,5 @@
+export type ConvertCoordinate = (coordinate: Coordinate) => Coordinate;
+
 export type Folder = {
     name: string;
     placemarks: Array<Placemark>;

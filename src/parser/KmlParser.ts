@@ -1,7 +1,7 @@
 import XmlParser from 'node-xml-stream';
 import { Attributes } from '../types/node-xml-stream';
 import { Tags } from './tags';
-import BaseParser from './BaseParser';
+import BaseParser, { ParserOptions } from './BaseParser';
 import FolderParser from './FolderParser';
 import { Design, Layer } from '../types/design';
 import hexToLong from '../utils/hexToLong';
@@ -10,11 +10,11 @@ export default class KmlParser extends BaseParser<Design> {
     output: Design;
     activeLayer: Layer;
 
-    constructor(stream: NodeJS.ReadableStream) {
+    constructor(stream: NodeJS.ReadableStream, options: ParserOptions = {}) {
         const xml = new XmlParser();
         const parserStream: NodeJS.ReadableStream = stream.pipe(xml);
         parserStream.setMaxListeners(100);
-        super(parserStream);
+        super(parserStream, options);
         this.output = {
             tables: {
                 layer: {
@@ -39,7 +39,7 @@ export default class KmlParser extends BaseParser<Design> {
     }
 
     async parseFolder() {
-        const folderParser = new FolderParser(this.stream);
+        const folderParser = new FolderParser(this.stream, this.options);
         const folder = await folderParser.parse();
         const { name, placemarks } = folder;
         this.output.tables.layer.layers[folder.name] = { name };

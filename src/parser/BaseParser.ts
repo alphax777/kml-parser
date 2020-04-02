@@ -1,8 +1,14 @@
 import { Attributes } from '../types/node-xml-stream';
+import { Coordinate, ConvertCoordinate } from '../types/kml';
 
 type StreamEventHandler = (...args: any[]) => void;
 
+export type ParserOptions = {
+    convertCoordinate?: ConvertCoordinate;
+};
+
 export default class BaseParser<T> {
+    options: ParserOptions;
     stream: NodeJS.ReadableStream;
     promise: Promise<T>;
     resolveFn: (data: T) => void;
@@ -11,7 +17,8 @@ export default class BaseParser<T> {
         [event: string]: StreamEventHandler;
     } = {};
 
-    constructor(stream: NodeJS.ReadableStream) {
+    constructor(stream: NodeJS.ReadableStream, options: ParserOptions = {}) {
+        this.options = options;
         this.stream = stream;
         this.promise = new Promise<T>((resolve, reject) => {
             this.resolveFn = resolve;

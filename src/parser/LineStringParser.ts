@@ -15,7 +15,10 @@ export default class LineStringParser extends BaseParser<LineString> {
                 this.lineString.altitudeMode = altitudeMode;
                 break;
             case Tags.Coordinates:
-                const coordinatesParser = new CoordinatesParser(this.stream);
+                const coordinatesParser = new CoordinatesParser(
+                    this.stream,
+                    this.options
+                );
                 const coordinates = await coordinatesParser.parse();
                 this.lineString.coordinates = coordinates;
                 break;
